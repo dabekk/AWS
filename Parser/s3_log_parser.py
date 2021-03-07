@@ -40,5 +40,6 @@ def parse_s3_log():
                     f.write(f"long request ID:  {long_id}\n")
                     f.write("----------------------\n\n")
             f.close()
+        s3_logs.close()
 
 parse_s3_log()      # calls log parser function
