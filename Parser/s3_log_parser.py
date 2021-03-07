@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """
 Author: Kamil Dabek
 Program will extract the S3 request IDs from a log file of an S3 request
