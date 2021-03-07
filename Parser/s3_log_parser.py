@@ -27,17 +27,18 @@ def parse_s3_log():
     print(f'Getting request IDs from: {os.path.abspath(INPUTFILE)} and outputting to {os.path.abspath(OUTPUTFILE)}')
     with open(INPUTFILE, 'r') as s3_logs:
 
-    # request ID pairs will be written to external file request_ids.txt
-        with open(OUTPUTFILE, 'w', newline="\n") as f:
+    # iterate through lines in input file and write request IDs to external file
+        with open(OUTPUTFILE, 'a') as f:
             f.write(f"S3 Request IDs from file in {os.path.abspath(INPUTFILE)}\n----------------------\n")
             for line in s3_logs:
                 if bool(re.search(f'{REQUEST_ID_SHORT}', f'{line}')):   # use regex to check if RID contained in line
                     short_id = re.split(f'\\b{REQUEST_ID_SHORT}\\b', line)[1][0:16]     # takes first 16 chars after RID tag
-                    f.write(f"""short request ID: {short_id}\n""")
+                    f.write(f"short request ID: {short_id}\n")
 
                 if bool(re.search(f'{REQUEST_ID_LONG}', f'{line}\n')):   # use regex to check if RID contained in line
                     long_id = re.split(f'\\b{REQUEST_ID_LONG}\\b', line)[1][0:76]     # takes first 76 chars after RID tag
-                    f.write(f"""long request ID:  {long_id}\n""")
-                    f.write("----------------------\n")
+                    f.write(f"long request ID:  {long_id}\n")
+                    f.write("----------------------\n\n")
+            f.close()
 
 parse_s3_log()      # calls log parser function
